@@ -74,14 +74,8 @@ Percentages are rounded to two decimals. If the previous month has zero spend, c
 
 ## Tests
 
-Tests exercise persistence across application restarts, exact monetary totals, invalid and malformed inputs, filtering and pagination, SQL-like category input, inclusive date boundaries, empty summaries, zero baselines, year rollover, declining spend, and the strict insight threshold. All 30 automated tests pass. UI assets are checked by HTTP. A manual browser check also verified that saving an expense updates the recent-expenses table and selected-month summary. The temporary sample was removed afterward. The installed test dependencies emit two upstream deprecation warnings; these do not affect the passing results.
+Tests cover persistence across application restarts, exact monetary totals, invalid and malformed inputs, filtering and pagination, SQL-like category input, inclusive date boundaries, empty summaries, zero baselines, year rollover, declining spend, and the strict insight threshold. UI assets are checked by HTTP.
 
 ## With more time
 
 For a larger, multi-user deployment, place an API gateway in front of the service to authenticate requests and apply shared policies such as rate limits. Keep authorization in the backend as well: each expense would have an owner ID, and every query would enforce that ownership. Introduce an ORM such as SQLAlchemy as the data model and relationships grow, with versioned schema migrations; the current parameterized SQL remains appropriate for this one-table demo. I would also add edit/delete operations, automated browser tests, backups, and month-to-date comparisons.
-
-## AI assistance and submission
-
-AI assistance was used to implement the initial API, UI, tests, and documentation. See `AI_USAGE.md` for an honest submission-note draft and items to personalize after your own review.
-
-Before submitting, review the code and run the tests, push this directory to a public or shared-access Git repository, and email the repository link plus your finalized 2–3 line AI note to the supplied recipient. No repository has been published and no email has been sent by this project setup.
