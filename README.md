@@ -2,6 +2,10 @@
 
 A single-user expense tracker built with Python/FastAPI, SQLite, and plain HTML/JavaScript. Includes a browser UI, category/date filters, monthly summaries, and category spending alerts.
 
+Live demo: https://ujjwal-spend-tracker.ujjwalpandey1609.workers.dev/
+
+The repository's `main` branch is the local SQLite implementation described below. For the public demo, I chose Cloudflare Workers with D1 for persistent, SQLite-compatible storage on the free plan. That deployment adapts the database access for D1 while keeping the same API routes, validation rules, and UI behavior. Its deployment-specific code is on a local branch and is not included in `main`; the local SQLite file and its expenses were not uploaded. The hosted demo has two labeled sample expenses to show the September 2026 category alert.
+
 ## Run locally
 
 Requires Python 3.10+ (tested with Python 3.12).
@@ -70,7 +74,8 @@ Percentages are rounded to two decimals. If the previous month has zero spend, c
 - **SQLite:** a real durable file with constraints and indexes on date and category/date. Parameterized SQL prevents user input from becoming SQL. Each operation opens a short-lived connection, commits writes, and closes it.
 - **Small synchronous API:** SQLite calls run in FastAPI's worker thread pool. An app factory and configurable database path isolate tests without mocking the database.
 - **Same-origin UI:** served by the API, with no frontend build process or CORS setup. User-provided text is rendered through `textContent`. Save errors are visible; the button is disabled during submission.
-- **Scope:** single-user local demonstration, without authentication or public deployment. Do not use it as a shared expense system without adding access control.
+- **Deployment choice:** I chose Cloudflare Workers and D1 for a free public demo while retaining this SQLite version as the submitted, locally runnable implementation. D1 provides durable storage without managing a separate database server. The deployment adapter is separate because the local `sqlite3` connection cannot run inside a Worker.
+- **Scope:** single-user demonstration without authentication. The public demo is open to anyone, so it should contain only sample data and should not be used as a shared expense system without access control.
 
 ## Tests
 
